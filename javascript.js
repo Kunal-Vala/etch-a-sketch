@@ -1,5 +1,6 @@
 const container = document.querySelector("#container");
-
+const edit = document.querySelector("#edit");
+const button = document.createElement('button');
 
 function gridMaker(num){
   container.innerHTML = "";
@@ -14,9 +15,14 @@ function gridMaker(num){
       divv.style.height = `${squareSize}px`;
       
       divv.classList.add('divv-style');
-
+      divv.style.backgroundColor = "rgb(255, 255, 255)"; // Start with black background
+      divv.style.opacity = "0.1";
       divv.addEventListener('mouseover', () => {
-        divv.style.backgroundColor = getRandomRGB();
+        let currentOpacity = parseFloat(divv.style.opacity);
+        if (currentOpacity < 1) {
+          divv.style.backgroundColor = getRandomRGB();
+          divv.style.opacity = (currentOpacity + 0.1).toFixed(1); // Increment opacity by 0.1
+        }
       });
       container.appendChild(divv);
     }
@@ -39,7 +45,26 @@ function getRandomRGB() {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
   const b = Math.floor(Math.random() * 256);
-  return `rgb(${r}, ${g}, ${b})`;
+  return `rgba(${r}, ${g}, ${b})`;
 }
 gridMaker(16);
+
+button.addEventListener('click',()=>{
+  let message = prompt("Enter Size:",'16');
+  if(message > 64){
+    let ale = alert('Maximum 64');
+  }
+  else if(message == null){
+    
+  }
+  else{
+    gridMaker(message);
+
+  }
+
+});
+button.classList.add('button-style');
+button.textContent = 'Change Size';
+edit.appendChild(button);
+
 
